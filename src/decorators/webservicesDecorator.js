@@ -1,9 +1,10 @@
-import { createXml2jsPromise } from "./utils";
 
 /**
- * This file contains a decorator to traslate the
- * given webservices xml file to an equivalent JSON file
+ * This file contains both decorators to traslate 
+ * a given webservices or single service xml file to an equivalent JSON file
  */
+
+import { createXml2jsPromise } from "./utils";
 
 const getTypeName = type => {
   if (type.File) {

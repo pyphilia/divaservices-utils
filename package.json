@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/pyphilia/divaservices-utils.git"
   },
-  "author": "",
+  "author": "Kim Lan Phan Hoang <kim.phanhoang@alumni.epfl.ch>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/pyphilia/divaservices-utils/issues"

@@ -1,9 +1,11 @@
+import { createXml2jsPromise } from "./utils";
+
 /**
  * This file contains a decorator to traslate the
- * given webservices xml file to an equivalent JSON file
+ * given collections xml file to an equivalent JSON file
  */
-
-const collectionsDecorator = xml => {
+const collectionsDecorator = async xmlFile => {
+  const xml = await createXml2jsPromise(xmlFile);
   const json = [];
 
   for (const collection of xml.Collections.Collection) {
