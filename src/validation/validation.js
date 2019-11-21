@@ -1,3 +1,5 @@
+import { Types } from "../constants";
+
 const checkStep = (step, currentVal) => {
   let checkStep = true;
   if (step) {
@@ -23,7 +25,7 @@ const checkStep = (step, currentVal) => {
 const checkValue = (value, type, values) => {
   let isValid = true;
   switch (type) {
-    case Inputs.NUMBER.type: {
+    case Types.NUMBER.type: {
       let { min, max, step } = values;
       min = parseFloat(min);
       max = parseFloat(max);
