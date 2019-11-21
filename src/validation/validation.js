@@ -40,4 +40,4 @@ const checkValue = (value, type, values) => {
   return isValid;
 };
 
-export { checkValue };
+export default { checkValue };
