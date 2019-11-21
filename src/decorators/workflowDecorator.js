@@ -6,7 +6,6 @@ const workflowDecorator = (xml, webservices) => {
     Information,
     Steps: [steps]
   } = xml.WorkflowDefinition;
-  // console.log("TCL: workflowDecorator -> steps", steps)
   for (const step of steps.Step) {
     const {
       Id: [stepId],
@@ -20,7 +19,6 @@ const workflowDecorator = (xml, webservices) => {
       Key: [stepKey]
     } = key;
     const currentWebservice = webservices.find(({ id }) => id == stepKey);
-    // console.log("TCL: workflowDecorator -> currentWebservice", currentWebservice)
     const {
       inputs: serviceInputs,
       name: serviceName,

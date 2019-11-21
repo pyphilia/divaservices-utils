@@ -30,8 +30,8 @@ const checkValue = (value, type, values) => {
       let { min, max, step } = values;
       min = parseFloat(min);
       max = parseFloat(max);
-      const minCondition = min ? value >= min : true;
-      const maxCondition = max ? value <= max : true;
+      const minCondition = !isNaN(min) ? value >= min : true;
+      const maxCondition = !isNaN(max) ? value <= max : true;
 
       // because of js inconsistency with float computations
       // we transform it to a string, round it to the the least precision

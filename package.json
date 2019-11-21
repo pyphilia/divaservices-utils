@@ -4,8 +4,8 @@
   "description": "utils for divaservices interfaces: decorators, validation, etc",
   "main": "index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier:write" : "prettier --write  \"src/**/*.js\" \"test/*.js\""
+    "test": "jest test",
+    "prettier:write": "prettier --write  \"src/**/*.js\" \"test/*.js\""
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,12 @@
   "dependencies": {
     "eslint": "^6.6.0",
     "prettier": "^1.19.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.7.1",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "regenerator-runtime": "^0.13.3"
   }
 }
