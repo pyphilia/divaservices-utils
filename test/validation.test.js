@@ -1,48 +1,61 @@
-import Validation from "../src/validation/validation"
-const {checkValue} = Validation;
-import Constants from "../src/constants"
+import Validation from "../src/validation/validation";
+const { checkNumberValue, checkSelectValue } = Validation;
 
-describe('Type: NUMBER', () => {
+describe("checkNumberValue", () => {
+  it("checkNumberValue with valid inputs", () => {
+    expect(checkNumberValue(1, {})).toBeTruthy();
+    expect(checkNumberValue(1, { min: 1 })).toBeTruthy();
+    expect(checkNumberValue(1, { max: 1 })).toBeTruthy();
+    expect(checkNumberValue(1, { step: 1 })).toBeTruthy();
+    expect(checkNumberValue(1, { min: 0, step: 1 })).toBeTruthy();
+    expect(checkNumberValue(1, { max: 1, step: 1 })).toBeTruthy();
+    expect(checkNumberValue(1, { min: 0, max: 1, step: 1 })).toBeTruthy();
+    expect(checkNumberValue(1, { min: 0, max: 1, step: 0.1 })).toBeTruthy();
 
-  it('checkValue with valid inputs', () => {
-    const SELECT = Constants.Types.NUMBER.type;
-    expect(checkValue(1, SELECT, {})).toBeTruthy()
-    expect(checkValue(1, SELECT, {min:1})).toBeTruthy()
-    expect(checkValue(1, SELECT, {max:1})).toBeTruthy()
-    expect(checkValue(1, SELECT, {step:1})).toBeTruthy()
-    expect(checkValue(1, SELECT, {min:0, step:1})).toBeTruthy()
-    expect(checkValue(1, SELECT, {max:1, step:1})).toBeTruthy()
-    expect(checkValue(1, SELECT, {min:0, max:1, step:1})).toBeTruthy()
-    expect(checkValue(1, SELECT, {min:0, max:1, step:0.1})).toBeTruthy()
-  
-    expect(checkValue(1.1, SELECT, {})).toBeTruthy()
-    expect(checkValue(1.1, SELECT, {min:1})).toBeTruthy()
-    expect(checkValue(1.1, SELECT, {max:2})).toBeTruthy()
-    expect(checkValue(1.1, SELECT, {step:0.1})).toBeTruthy()
-    expect(checkValue(1.1, SELECT, {min:0, step:0.1})).toBeTruthy()
-    expect(checkValue(1.1, SELECT, {max:2, step:0.1})).toBeTruthy()
-    expect(checkValue(1.1, SELECT, {min:0, max:2, step:0.1})).toBeTruthy()
-    expect(checkValue(1.1, SELECT, {min:0, max:2, step:0.01})).toBeTruthy()
+    expect(checkNumberValue(1.1, {})).toBeTruthy();
+    expect(checkNumberValue(1.1, { min: 1 })).toBeTruthy();
+    expect(checkNumberValue(1.1, { max: 2 })).toBeTruthy();
+    expect(checkNumberValue(1.1, { step: 0.1 })).toBeTruthy();
+    expect(checkNumberValue(1.1, { min: 0, step: 0.1 })).toBeTruthy();
+    expect(checkNumberValue(1.1, { max: 2, step: 0.1 })).toBeTruthy();
+    expect(checkNumberValue(1.1, { min: 0, max: 2, step: 0.1 })).toBeTruthy();
+    expect(checkNumberValue(1.1, { min: 0, max: 2, step: 0.01 })).toBeTruthy();
   });
 
-  it('checkValue with invalid inputs', () => {
-    const SELECT = Constants.Types.NUMBER.type;
-    expect(checkValue(1, SELECT, {min:2})).toBeFalsy()
-    expect(checkValue(1, SELECT, {max:0})).toBeFalsy()
-    expect(checkValue(1, SELECT, {min:2, step:1})).toBeFalsy()
-    expect(checkValue(1, SELECT, {max:0, step:1})).toBeFalsy()
-    expect(checkValue(1, SELECT, {min:2, max:1, step:1})).toBeFalsy()
-    expect(checkValue(1, SELECT, {min:0, max:0, step:0.1})).toBeFalsy()
-  
-    expect(checkValue(1.1, SELECT, {min:2.2})).toBeFalsy()
-    expect(checkValue(1.1, SELECT, {max:0.5})).toBeFalsy()
-    expect(checkValue(1.1, SELECT, {step:1})).toBeFalsy()
-    expect(checkValue(1.1, SELECT, {step:0.5})).toBeFalsy()
-    expect(checkValue(1.1, SELECT, {min:0, step:0.5})).toBeFalsy()
-    expect(checkValue(1.1, SELECT, {max:0, step:0.1})).toBeFalsy()
-    expect(checkValue(1.1, SELECT, {min:1.4, max:2, step:0.1})).toBeFalsy()
-    expect(checkValue(1.1, SELECT, {min:0, max:1, step:0.01})).toBeFalsy()
-    expect(checkValue(1.1, SELECT, {min:0, max:2, step:1})).toBeFalsy()
+  it("checkNumberValue with invalid inputs", () => {
+    expect(checkNumberValue(1, { min: 2 })).toBeFalsy();
+    expect(checkNumberValue(1, { max: 0 })).toBeFalsy();
+    expect(checkNumberValue(1, { min: 2, step: 1 })).toBeFalsy();
+    expect(checkNumberValue(1, { max: 0, step: 1 })).toBeFalsy();
+    expect(checkNumberValue(1, { min: 2, max: 1, step: 1 })).toBeFalsy();
+    expect(checkNumberValue(1, { min: 0, max: 0, step: 0.1 })).toBeFalsy();
+
+    expect(checkNumberValue(1.1, { min: 2.2 })).toBeFalsy();
+    expect(checkNumberValue(1.1, { max: 0.5 })).toBeFalsy();
+    expect(checkNumberValue(1.1, { step: 1 })).toBeFalsy();
+    expect(checkNumberValue(1.1, { step: 0.5 })).toBeFalsy();
+    expect(checkNumberValue(1.1, { min: 0, step: 0.5 })).toBeFalsy();
+    expect(checkNumberValue(1.1, { max: 0, step: 0.1 })).toBeFalsy();
+    expect(checkNumberValue(1.1, { min: 1.4, max: 2, step: 0.1 })).toBeFalsy();
+    expect(checkNumberValue(1.1, { min: 0, max: 1, step: 0.01 })).toBeFalsy();
+    expect(checkNumberValue(1.1, { min: 0, max: 2, step: 1 })).toBeFalsy();
+  });
+});
+
+describe("checkSelectValue", () => {
+  it("checkSelectValue with valid inputs", () => {
+    expect(checkSelectValue(1, [1, 2, 3])).toBeTruthy();
+    expect(checkSelectValue(1, [1])).toBeTruthy();
+    expect(checkSelectValue(1, [4, 2, 5, 1])).toBeTruthy();
+    expect(checkSelectValue("1", ["1", "2"])).toBeTruthy();
+    expect(checkSelectValue("one", ["two", "one", "three"])).toBeTruthy();
   });
 
-})
+  it("checkSelectValue with invalid inputs", () => {
+    expect(checkSelectValue(4, [1, 2, 3])).toBeFalsy();
+    expect(checkSelectValue(2, [1])).toBeFalsy();
+    expect(checkSelectValue(3, [4, 2, 5, 1])).toBeFalsy();
+    expect(checkSelectValue("3", ["1", "2"])).toBeFalsy();
+    expect(checkSelectValue("four", ["two", "one", "three"])).toBeFalsy();
+  });
+});
