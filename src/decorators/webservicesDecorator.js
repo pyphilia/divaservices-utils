@@ -45,7 +45,7 @@ const getTypeName = type => {
   }
 };
 
-export const serviceDecorator = xml => {
+export const serviceDecorator = async xml => {
   const json = await createXml2jsPromise(xml);
   return Decorators._serviceDecorator(json.Service);
 }
