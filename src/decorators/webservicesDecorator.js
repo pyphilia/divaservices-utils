@@ -1,3 +1,5 @@
+import { createXml2jsPromise } from "./utils";
+
 /**
  * This file contains a decorator to traslate the
  * given webservices xml file to an equivalent JSON file
@@ -44,6 +46,11 @@ const getTypeName = type => {
 };
 
 export const serviceDecorator = xml => {
+  const json = await createXml2jsPromise(xml);
+  return Decorators._serviceDecorator(json.Service);
+}
+
+export const _serviceDecorator = xml => {
   const {
     Id: [id],
     Information: [information],
@@ -133,10 +140,11 @@ export const serviceDecorator = xml => {
   };
 };
 
-export const webservicesDecorator = xml => {
+export const webservicesDecorator = async xmlFile => {
+  const xml = await createXml2jsPromise(xmlFile);
   const json = [];
   for (const s of xml.Services.Service) {
-    const service = serviceDecorator(s);
+    const service = _serviceDecorator(s);
     json.push(service);
   }
   return json;
