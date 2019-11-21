@@ -1,4 +1,4 @@
-export const workflowDecorator = (xml, webservices) => {
+const workflowDecorator = (xml, webservices) => {
   const services = [];
 
   const {
@@ -67,3 +67,5 @@ export const workflowDecorator = (xml, webservices) => {
   }
   return { id, Information, services };
 };
+
+export default workflowDecorator;

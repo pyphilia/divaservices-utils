@@ -1,5 +1,10 @@
-import collectionsDecorator from "./decorators/collectionsDecorator";
-import webservicesDecorator from "./decorators/webservicesDecorator";
-import workflowDecorator from "./decorators/workflowDecorator";
+import collectionsDecorator from "./collectionsDecorator";
+import { webservicesDecorator, serviceDecorator } from "./webservicesDecorator";
+import workflowDecorator from "./workflowDecorator";
 
-export { collectionsDecorator, webservicesDecorator, workflowDecorator };
+export default {
+  collectionsDecorator,
+  serviceDecorator,
+  webservicesDecorator,
+  workflowDecorator
+};

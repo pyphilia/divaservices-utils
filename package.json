@@ -2,7 +2,7 @@
   "name": "divaservices-utils",
   "version": "1.0.0",
   "description": "utils for divaservices interfaces: decorators, validation, etc",
-  "main": "index",
+  "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier:write" : "prettier --write  \"src/**/*.js\" \"test/*.js\""
