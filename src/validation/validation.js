@@ -1,4 +1,5 @@
-import { Types } from "../constants.js";
+import Constants from "../constants.js";
+const { Types } = Constants;
 
 const checkStep = (step, currentVal) => {
   let checkStep = true;

@@ -6,4 +6,4 @@ const Types = {
 };
 Object.freeze(Types);
 
-export { Types };
+export default { Types };
