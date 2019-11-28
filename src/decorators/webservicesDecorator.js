@@ -48,7 +48,7 @@ const getTypeName = type => {
 
 export const serviceDecorator = async xml => {
   const json = await createXml2jsPromise(xml);
-  return Decorators._serviceDecorator(json.Service);
+  return _serviceDecorator(json.Service);
 }
 
 export const _serviceDecorator = xml => {
@@ -60,7 +60,8 @@ export const _serviceDecorator = xml => {
   const {
     Name: [name],
     Description: [description],
-    Type: [type]
+    Type: [type],
+    ExpectedRuntime,
   } = information;
   const {
     Inputs: [inputsData],
@@ -136,6 +137,7 @@ export const _serviceDecorator = xml => {
     name,
     type,
     description,
+    expectedRuntime: ExpectedRuntime ? ExpectedRuntime[0] : undefined,
     inputs,
     outputs
   };

@@ -26,34 +26,36 @@ const collectionsDecorator = async xmlFile => {
     } else {
       const files = [];
       const {
-        Files: [filesArr],
-        StatusMessage: [statusMessage]
+        Files,
+        StatusMessage
       } = collection;
 
-      for (const file of filesArr.File) {
-        const {
-          Url: [url],
-          Identifier: [identifier],
-          Options
-        } = file;
+      if(Files) {
+        for (const file of Files[0].File) {
+          const {
+            Url: [url],
+            Identifier: [identifier],
+            Options
+          } = file;
 
-        const f = { url, identifier };
-        if (Options) {
-          const options = {};
-          for (const [k, v] of Object.entries(Options[0])) {
-            // const options = Options[0].map((k,v) => ({[k.lowerCase()]: v})).reduce((arr, el) => ({arr, ...el}))
-            options[k.toLowerCase()] = v[0];
+          const f = { url, identifier };
+          if (Options) {
+            const options = {};
+            for (const [k, v] of Object.entries(Options[0])) {
+              // const options = Options[0].map((k,v) => ({[k.lowerCase()]: v})).reduce((arr, el) => ({arr, ...el}))
+              options[k.toLowerCase()] = v[0];
+            }
+            f["options"] = options;
           }
-          f["options"] = options;
-        }
 
-        files.push(f);
+          files.push(f);
+        }
       }
 
       coll = {
         files,
         name,
-        statusMessage,
+        statusMessage: StatusMessage ? StatusMessage[0] : undefined,
         url
       };
     }
