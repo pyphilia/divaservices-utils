@@ -6,26 +6,24 @@
 
 import { createXml2jsPromise } from "./utils";
 
-const getTypeName = type => {
-  if (type.File) {
+const getTypeName = data => {
+  if (data.MimeTypes) {
     const {
       MimeTypes: [mimeTypes]
-    } = type.File[0];
-    return { type: "file", allowed: mimeTypes.Allowed };
-  } else if (type.Folder) {
-    return { type: "folder" };
-  } else if (type.EnumeratedType) {
+    } = data;
+    return { type: "file", allowed: mimeTypes.Allowed, defaultValue: mimeTypes.Default[0] };
+  } else if (data.Type[0].EnumeratedType) {
     const {
       Default: [defaultValue],
       Value
-    } = type.EnumeratedType[0];
+    } = data.Type[0].EnumeratedType[0];
     return {
       defaultValue,
       values: Value,
       type: "select"
     };
-  } else if (type.StepNumberType) {
-    const { Default, Min, Max, Step } = type.StepNumberType[0];
+  } else if (data.Type[0].StepNumberType) {
+    const { Default, Min, Max, Step } = data.Type[0].StepNumberType[0];
     const res = {
       type: "number",
       values: {}
@@ -60,7 +58,7 @@ export const _serviceDecorator = xml => {
   const {
     Name: [name],
     Description: [description],
-    Type: [type],
+    Category: [category],
     ExpectedRuntime,
   } = information;
   const {
@@ -75,14 +73,14 @@ export const _serviceDecorator = xml => {
       const {
         Description: [description],
         Name: [name],
-        Type: [typeData]
       } = paramData;
-      const { type, allowed } = getTypeName(typeData);
+      const { type, allowed, defaultValue } = getTypeName(paramData);
       const param = {
         description,
         name,
         type,
-        mimeTypes: { allowed }
+        mimeTypes: { allowed,
+          defaultValue }
       };
       inputs.push(param);
     }
@@ -93,9 +91,8 @@ export const _serviceDecorator = xml => {
       const {
         Description: [description],
         Name: [name],
-        Type: [typeData]
       } = parameter;
-      const { type, defaultValue, values } = getTypeName(typeData);
+      const { type, defaultValue, values } = getTypeName(parameter);
       const param = {
         description,
         name,
@@ -113,7 +110,6 @@ export const _serviceDecorator = xml => {
       const {
         Description,
         Name: [name],
-        Type: [typeData]
       } = output;
 
       let description;
@@ -121,7 +117,7 @@ export const _serviceDecorator = xml => {
         description = Description[0];
       }
 
-      const { type, allowed } = getTypeName(typeData);
+      const { type, allowed } = getTypeName(output);
       const out = {
         description,
         name,
@@ -131,11 +127,10 @@ export const _serviceDecorator = xml => {
       outputs.push(out);
     }
   }
-
   return {
     id: parseInt(id),
     name,
-    type,
+    category,
     description,
     expectedRuntime: ExpectedRuntime ? ExpectedRuntime[0] : undefined,
     inputs,

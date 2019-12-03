@@ -65,20 +65,19 @@ def create_collections_xml(collection_url, filepath="collections.xml"):
     else:
         return None
 
-def createAlgoServiceFile(json_file, filepath='services.xml'):
-  services = open(filepath,"w")
+# def createAlgoServiceFile(json_file, filepath='services.xml'):
+#   services = open(filepath,"w")
 
-  with open(json_file) as f:
-    d = json.load(f)
-    text = ''
-    for index, algo in enumerate(d):
-      text +='<Service>'
-      text += '<Name>' + algo['name'].replace(" ", "") + '</Name>'
-      text += '<Id>' + str(index) + '</Id>'
-      text += '</Service>'
+#   with open(json_file) as f:
+#     d = json.load(f)
+#     text = ''
+#     for index, algo in enumerate(d):
+#       text +='<Service>'
+#       text += '<Id>' + str(index) + '</Id>'
+#       text += '</Service>'
 
-  services.write(text)
-  services.close()
+#   services.write(text)
+#   services.close()
 
 def create_data_inputs(api_url_base, filepath="inputData.xml"): 
     response = requests.get(api_url_base)
@@ -152,9 +151,9 @@ def create_services_xml(api_url_base, filepath="services.xml"):
             information = ET.SubElement(service, 'Information')
             ET.SubElement(information, 'Name').text = general['name']
             ET.SubElement(information, 'Description').text = general['description']
-            ET.SubElement(information, 'Developer').text = general['developer']
-            ET.SubElement(information, 'Affilation').text = general['affiliation']
-            ET.SubElement(information, 'Email').text = general['email']
+            # ET.SubElement(information, 'Developer').text = general['developer']
+            # ET.SubElement(information, 'Affilation').text = general['affiliation']
+            # ET.SubElement(information, 'Email').text = general['email']
             ET.SubElement(information, 'Author').text = general['author']
             if('DOI' in general):
               ET.SubElement(information, 'DOI').text = str(general['DOI'])
@@ -162,11 +161,11 @@ def create_services_xml(api_url_base, filepath="services.xml"):
               ET.SubElement(information, 'License').text = general['license']
             if('type' not in general):
               general['type'] = 'other'
-            ET.SubElement(information, 'Type').text = general['type']
+            ET.SubElement(information, 'Category').text = general['type']
             if 'ownsCopyright' in general:
-              ET.SubElement(information, 'OwnsCopyright').text = general['ownsCopyright']
+              ET.SubElement(information, 'Ownership').text = general['ownsCopyright']
             ET.SubElement(information, 'ExpectedRuntime').text = str(general['expectedRuntime'])
-            ET.SubElement(information, 'Executions').text = str(general['executions'])
+            # ET.SubElement(information, 'Executions').text = str(general['executions'])
 
             api = ET.SubElement(service, 'API')
             ET.SubElement(api, 'BaseURL').text = url 
@@ -178,22 +177,29 @@ def create_services_xml(api_url_base, filepath="services.xml"):
               # print(inp)
               if 'file' in inp:
                 el = ET.SubElement(inputs, 'Data')
+                if(not inp['file']['options']['required']):
+                  el.attrib['Status'] = 'Optional'
+
                 ET.SubElement(el, 'Name').text = inp['file']['name']
                 ET.SubElement(el, 'Description').text = inp['file']['description']
-                dataType = ET.SubElement(el, 'Type')
-                fileEl = ET.SubElement(dataType, 'File')
-                mime = ET.SubElement(fileEl, 'MimeTypes')
+                dataType = ET.SubElement(el, 'MimeTypes')
+                ET.SubElement(dataType, 'Default').text = inp['file']['options']['mimeTypes']['default']
                 
                 for mimetypes in inp['file']['options']['mimeTypes']['allowed']:
-                  ET.SubElement(mime, 'Allowed').text = mimetypes
+                  ET.SubElement(dataType, 'Allowed').text = mimetypes
 
               if 'folder' in inp:
                 el = ET.SubElement(inputs, 'Data')
+                if(not inp['folder']['options']['required']):
+                  el.attrib['Status'] = 'Optional'
+
                 ET.SubElement(el, 'Name').text = inp['folder']['name']
                 ET.SubElement(el, 'Description').text = inp['folder']['description']
-                dataType = ET.SubElement(el, 'Type')
-                fileEl = ET.SubElement(dataType, 'Folder')
-                # mime = ET.SubElement(fileEl, 'MimeTypes')
+                # dataType = ET.SubElement(el, 'Type')
+                # fileEl = ET.SubElement(dataType, 'Folder')
+                mime = ET.SubElement(el, 'MimeTypes')
+                ET.SubElement(mime, 'Default').text = 'folder'
+                ET.SubElement(mime, 'Allowed').text = 'folder'
                 # for mimetypes in inp['folder']['options']['mimeTypes']['allowed']:
                 #   ET.SubElement(mime, 'Allowed').text = mimetypes
 
@@ -204,7 +210,7 @@ def create_services_xml(api_url_base, filepath="services.xml"):
                 # print(inp['number'])
                 el = ET.SubElement(inputs, 'Parameter')
                 if(not inp['number']['options']['required']):
-                  el.attrib['Status'] = 'optional'
+                  el.attrib['Status'] = 'Optional'
 
                 ET.SubElement(el, 'Name').text = inp['number']['name']
                 ET.SubElement(el, 'Description').text = inp['number']['description']
@@ -225,7 +231,7 @@ def create_services_xml(api_url_base, filepath="services.xml"):
                 # print(inp['select'])
                 el = ET.SubElement(inputs, 'Parameter')
                 if(not inp['select']['options']['required']):
-                  el.attrib['Status'] = 'optional'
+                  el.attrib['Status'] = 'Optional'
 
                 ET.SubElement(el, 'Name').text = inp['select']['name']
                 ET.SubElement(el, 'Description').text = inp['select']['description']
@@ -244,19 +250,24 @@ def create_services_xml(api_url_base, filepath="services.xml"):
                 output = ET.SubElement(outputs, 'Output')
                 ET.SubElement(output, 'Name').text = out['file']['name']
                 ET.SubElement(output, 'Description').text = out['file']['description']
-                typeEl = ET.SubElement(output, 'Type')
-                fileEl = ET.SubElement(typeEl, 'File')
-                mimetypes = ET.SubElement(fileEl, 'MimeTypes')
+                # typeEl = ET.SubElement(output, 'Type')
+                # fileEl = ET.SubElement(typeEl, 'File')
+                mimetypes = ET.SubElement(output, 'MimeTypes')
+                ET.SubElement(mimetypes, 'Default').text = out['file']['options']['mimeTypes']['default']
                 for types in out['file']['options']['mimeTypes']['allowed']:
                   ET.SubElement(mimetypes, 'Allowed').text = types
               if 'folder' in out:
                 output = ET.SubElement(outputs, 'Output')
                 ET.SubElement(output, 'Name').text = out['folder']['name']
-                typeEl = ET.SubElement(output, 'Type')
-                fileEl = ET.SubElement(typeEl, 'Folder')
+                if 'description' in out['folder']:
+                  ET.SubElement(output, 'Description').text = out['folder']['description']
+                mimetypes = ET.SubElement(output, 'MimeTypes')
+                ET.SubElement(mimetypes, 'Default').text = 'folder'
+                ET.SubElement(mimetypes, 'Allowed').text = 'folder'
 
         tree = ET.ElementTree(root)
         tree.write(filepath)
     else:
         return None
 
+create_services_xml('http://134.21.72.190:8080/', '../public/services.xml')
