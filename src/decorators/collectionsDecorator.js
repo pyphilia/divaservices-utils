@@ -30,7 +30,7 @@ const collectionsDecorator = async xmlFile => {
         StatusMessage
       } = collection;
 
-      if(Files) {
+      if(Files && Files[0].File) {
         for (const file of Files[0].File) {
           const {
             Url: [url],
