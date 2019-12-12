@@ -168,8 +168,8 @@ def create_services_xml(api_url_base, filepath="services.xml"):
             # ET.SubElement(information, 'Executions').text = str(general['executions'])
 
             api = ET.SubElement(service, 'API')
-            baseurl = ''.join(url.split('/',3)[:3])
-            endpoint = ''.join(url.split('/',3)[3:])
+            baseurl = '/'.join(url.split('/',3)[:3])
+            endpoint = '/'.join(url.split('/',3)[3:])
             ET.SubElement(api, 'BaseURL').text = baseurl 
             ET.SubElement(api, 'EndPoint').text = endpoint 
 

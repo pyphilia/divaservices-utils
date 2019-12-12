@@ -1,68 +1,67 @@
-import { createXml2jsPromise } from "./utils";
-
 /**
  * This file contains a decorator to traslate the
  * given collections xml file to an equivalent JSON file
  */
-const collectionsDecorator = async xmlFile => {
-  const xml = await createXml2jsPromise(xmlFile);
-  const json = [];
 
-  for (const collection of xml.Collections.Collection) {
-    const {
-      Name: [name],
-      Url: [url],
-      Error: error
-    } = collection;
+import { createXml2jsPromise } from "./utils";
 
-    let coll;
+const _collectionDecorator = collection => {
+  const {
+    Name: [name],
+    Url: [url],
+    Error: error
+  } = collection;
 
-    if (error) {
-      coll = {
-        error: error[0],
-        name,
-        url
-      };
-    } else {
-      const files = [];
-      const {
-        Files,
-        StatusMessage
-      } = collection;
+  if (error) {
+    coll = {
+      error: error[0],
+      name,
+      url
+    };
+  } else {
+    const files = [];
+    const { Files, StatusMessage } = collection;
 
-      if(Files && Files[0].File) {
-        for (const file of Files[0].File) {
-          const {
-            Url: [url],
-            Identifier: [identifier],
-            Options
-          } = file;
+    if (Files && Files[0].File) {
+      for (const file of Files[0].File) {
+        const {
+          Url: [url],
+          Identifier: [identifier],
+          Options
+        } = file;
 
-          const f = { url, identifier };
-          if (Options) {
-            const options = {};
-            for (const [k, v] of Object.entries(Options[0])) {
-              // const options = Options[0].map((k,v) => ({[k.lowerCase()]: v})).reduce((arr, el) => ({arr, ...el}))
-              options[k.toLowerCase()] = v[0];
-            }
-            f["options"] = options;
+        const f = { url, identifier };
+        if (Options) {
+          const options = {};
+          for (const [k, v] of Object.entries(Options[0])) {
+            // const options = Options[0].map((k,v) => ({[k.lowerCase()]: v})).reduce((arr, el) => ({arr, ...el}))
+            options[k.toLowerCase()] = v[0];
           }
-
-          files.push(f);
+          f["options"] = options;
         }
-      }
 
-      coll = {
-        files,
-        name,
-        statusMessage: StatusMessage ? StatusMessage[0] : undefined,
-        url
-      };
+        files.push(f);
+      }
     }
 
-    json.push(coll);
+    return {
+      files,
+      name,
+      statusMessage: StatusMessage ? StatusMessage[0] : undefined,
+      url
+    };
   }
-  return json;
 };
 
-export default collectionsDecorator;
+const collectionDecorator = async xmlFile => {
+  const xml = await createXml2jsPromise(xmlFile);
+  return _collectionDecorator(xml.Collection);
+};
+
+const collectionsDecorator = async xmlFile => {
+  const xml = await createXml2jsPromise(xmlFile);
+
+  return xml.Collections.Collection.map(c => _collectionDecorator(c));
+};
+
+export { collectionsDecorator, collectionDecorator };

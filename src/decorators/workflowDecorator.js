@@ -10,15 +10,14 @@ const workflowDecorator = async (xmlFile, webservices) => {
     Steps: [steps]
   } = xml.WorkflowDefinition;
 
-  const information = {}
-  for(const [k,v] of Object.entries(inf)) {
+  const information = {};
+  for (const [k, v] of Object.entries(inf)) {
     //@TODO
     information[k.toLowerCase()] = v[0];
   }
 
   for (const step of steps.Step) {
     const {
-      Id: [stepId],
       No: [stepNo],
       // Name: [stepName],
       Service: [key],
@@ -29,32 +28,31 @@ const workflowDecorator = async (xmlFile, webservices) => {
       Key: [stepKey]
     } = key;
     const currentWebservice = webservices.find(({ id }) => id == stepKey);
-    
+
     const {
       inputs: serviceInputs,
       name: serviceName,
       outputs: serviceOutputs,
       expectedRuntime,
       type,
-      description: serviceDescription,
+      description: serviceDescription
     } = currentWebservice;
 
     const service = {
-      id: stepId,
       no: stepNo,
       inputs: JSON.parse(JSON.stringify(serviceInputs)), // deep clone, otherwise it shares inputs with same named services
       name: serviceName,
       outputs: serviceOutputs,
       description: serviceDescription,
       expectedRuntime,
-      type,
+      type
     };
 
     const { Parameter, Data } = inputs;
     if (Parameter) {
       for (const input of Parameter) {
         const {
-          paramName: [pName],
+          Name: [pName],
           Value: [value]
         } = input;
 
@@ -76,7 +74,7 @@ const workflowDecorator = async (xmlFile, webservices) => {
         serviceInput.definedValue = { ref, serviceOutputName };
       }
     }
-    
+
     services.push(service);
   }
   return { id, information, services };

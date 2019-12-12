@@ -1,6 +1,5 @@
-
 /**
- * This file contains both decorators to traslate 
+ * This file contains both decorators to traslate
  * a given webservices or single service xml file to an equivalent JSON file
  */
 
@@ -11,7 +10,11 @@ const getTypeName = data => {
     const {
       MimeTypes: [mimeTypes]
     } = data;
-    return { type: "file", allowed: mimeTypes.Allowed, defaultValue: mimeTypes.Default[0] };
+    return {
+      type: "file",
+      allowed: mimeTypes.Allowed,
+      defaultValue: mimeTypes.Default[0]
+    };
   } else if (data.Type[0].EnumeratedType) {
     const {
       Default: [defaultValue],
@@ -47,7 +50,7 @@ const getTypeName = data => {
 export const serviceDecorator = async xml => {
   const json = await createXml2jsPromise(xml);
   return _serviceDecorator(json.Service);
-}
+};
 
 export const _serviceDecorator = xml => {
   const {
@@ -59,11 +62,13 @@ export const _serviceDecorator = xml => {
     Name: [name],
     Description: [description],
     Category: [category],
-    ExpectedRuntime,
+    ExpectedRuntime
   } = information;
   const {
     Inputs: [inputsData],
-    Outputs: [outputsData]
+    Outputs: [outputsData],
+    EndPoint: [endpoint],
+    BaseURL: [baseurl]
   } = api;
   const { Data, Parameter } = inputsData;
 
@@ -72,15 +77,14 @@ export const _serviceDecorator = xml => {
     for (const paramData of Data) {
       const {
         Description: [description],
-        Name: [name],
+        Name: [name]
       } = paramData;
       const { type, allowed, defaultValue } = getTypeName(paramData);
       const param = {
         description,
         name,
         type,
-        mimeTypes: { allowed,
-          defaultValue }
+        mimeTypes: { allowed, defaultValue }
       };
       inputs.push(param);
     }
@@ -90,7 +94,7 @@ export const _serviceDecorator = xml => {
     for (const parameter of Parameter) {
       const {
         Description: [description],
-        Name: [name],
+        Name: [name]
       } = parameter;
       const { type, defaultValue, values } = getTypeName(parameter);
       const param = {
@@ -109,7 +113,7 @@ export const _serviceDecorator = xml => {
     for (const output of outputsData.Output) {
       const {
         Description,
-        Name: [name],
+        Name: [name]
       } = output;
 
       let description;
@@ -132,6 +136,7 @@ export const _serviceDecorator = xml => {
     name,
     category,
     description,
+    method: `${baseurl}/${endpoint}`,
     expectedRuntime: ExpectedRuntime ? ExpectedRuntime[0] : undefined,
     inputs,
     outputs
