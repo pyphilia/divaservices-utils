@@ -8,14 +8,13 @@ const workflowDecorator = async (xmlFile, webservices) => {
     Id: [id],
     Information: [inf],
     Steps: [steps]
-  } = xml.WorkflowDefinition;
+  } = xml.Workflow;
 
   const information = {};
   for (const [k, v] of Object.entries(inf)) {
     //@TODO
     information[k.toLowerCase()] = v[0];
   }
-
   for (const step of steps.Step) {
     const {
       No: [stepNo],
@@ -64,14 +63,22 @@ const workflowDecorator = async (xmlFile, webservices) => {
       for (const input of Data) {
         const {
           Name: [pName],
-          Value: [value]
+          Value,
+          Path
         } = input;
-        const {
-          Ref: [ref],
-          ServiceOutputName: [serviceOutputName]
-        } = value.WorkflowStep[0]; // @TODO multiple ones
         const serviceInput = service.inputs.find(({ name }) => name == pName);
-        serviceInput.definedValue = { ref, serviceOutputName };
+
+        if (Value) {
+          const {
+            Ref: [ref],
+            ServiceOutputName: [serviceOutputName]
+          } = Value[0].WorkflowStep[0]; // @TODO multiple ones
+          serviceInput.definedValue = { ref, serviceOutputName };
+        }
+        // defined workflow value with existing image
+        else if (Path) {
+          serviceInput.definedValue = { path: Path[0] };
+        }
       }
     }
 

@@ -61,7 +61,9 @@ const collectionDecorator = async xmlFile => {
 const collectionsDecorator = async xmlFile => {
   const xml = await createXml2jsPromise(xmlFile);
 
-  return xml.Collections.Collection.map(c => _collectionDecorator(c));
+  return xml.Collections
+    ? xml.Collections.Collection.map(c => _collectionDecorator(c))
+    : [];
 };
 
 export { collectionsDecorator, collectionDecorator };
