@@ -74,11 +74,9 @@ const experimentDecorator = async xml => {
       }
     }
 
-    console.log("3rsd");
     /* Outputs */
     const outputs = { files: [], data: {} };
     for (const param of Out.Collection[0].Files[0].File) {
-      console.log("TCL: param", param);
       const {
         Name: [name],
         Options: [Opt],
