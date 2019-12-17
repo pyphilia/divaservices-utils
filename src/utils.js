@@ -7,6 +7,11 @@ const buildFileUrlFromIdentifier = (baseUrl, identifier) => {
   return buildFileUrlFromCollectionAndName(baseUrl, collection, name);
 };
 
+const buildNameForRequest = str => {
+  const reg = new RegExp(" ", "g");
+  return str.replace(reg, "");
+};
+
 const getUrlParameters = (
   separator = ";",
   getParameters = window.location.search.substring(1)
@@ -23,5 +28,6 @@ const getUrlParameters = (
 export default {
   buildFileUrlFromCollectionAndName,
   buildFileUrlFromIdentifier,
-  getUrlParameters
+  getUrlParameters,
+  buildNameForRequest
 };
