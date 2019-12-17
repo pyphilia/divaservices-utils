@@ -7,6 +7,7 @@ import { createXml2jsPromise } from "./utils";
 
 const _collectionDecorator = collection => {
   const {
+    Id: [id],
     Name: [name],
     Url: [url],
     Error: error
@@ -45,6 +46,7 @@ const _collectionDecorator = collection => {
     }
 
     return {
+      id,
       files,
       name,
       statusMessage: StatusMessage ? StatusMessage[0] : undefined,
