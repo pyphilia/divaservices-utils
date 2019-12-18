@@ -28,4 +28,11 @@ export const ExecutionRequest = (steps, jsonRequest) => {
   </Request>`;
 };
 
-export default { Parameter, Data, Step, ExecutionRequest };
+export const SaveRequest = (steps, request) => {
+  return `<Request>
+  <JsonRequest>${request}</JsonRequest>
+  ${steps}
+</Request>`;
+};
+
+export default { Parameter, Data, Step, ExecutionRequest, SaveRequest };

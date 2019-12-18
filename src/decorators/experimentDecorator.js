@@ -32,13 +32,14 @@ const experimentDecorator = async xml => {
     Author: [author],
     Datetime: [datetime]
   } = Information[0];
-  // const author = Author.length ? Author[0] : 1111;
 
   let stepsData;
+  let type;
   if (Workflow) {
+    type = { workflow: parseInt(Workflow[0].Key[0]) };
     stepsData = Workflow[0].Steps[0].Step;
   } else if (Service) {
-    // @TODO
+    type = { service: parseInt(Service[0].Key[0]) };
     stepsData = Service;
   }
 
@@ -93,15 +94,13 @@ const experimentDecorator = async xml => {
 
       outputs.files.push(file);
     }
-    // for(const d of Inp.Data){
-    //   outputs.data[d.Name[0]] = d.Value[0];
-    // }
 
     steps.push({ inputs, outputs, ...info });
   }
 
   return {
     id: parseInt(id),
+    ...type,
     information: {
       name,
       author,

@@ -8,8 +8,17 @@ const buildFileUrlFromIdentifier = (baseUrl, identifier) => {
 };
 
 const buildNameForRequest = str => {
-  const reg = new RegExp(" ", "g");
-  return str.replace(reg, "");
+  return str.replace(/\s/g, "");
+};
+
+const buildInputNameForService = (serviceName, inputName) => {
+  return `${buildNameForRequest(serviceName)}_${buildNameForRequest(
+    inputName
+  )}`;
+};
+
+const buildInputReferenceName = (serviceName, inputName) => {
+  return `$${serviceName}/$${inputName}`;
 };
 
 const getUrlParameters = (
@@ -25,9 +34,17 @@ const getUrlParameters = (
   return parameters;
 };
 
+export const parseParameterValue = value => {
+  const ret = parseFloat(value);
+  return isNaN(ret) ? value : ret;
+};
+
 export default {
   buildFileUrlFromCollectionAndName,
   buildFileUrlFromIdentifier,
   getUrlParameters,
-  buildNameForRequest
+  buildNameForRequest,
+  buildInputNameForService,
+  buildInputReferenceName,
+  parseParameterValue
 };
