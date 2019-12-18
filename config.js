@@ -6,3 +6,4 @@ export const SERVICES_API_ENDPOINT = "api/services";
 export const WORKFLOWS_API_ENDPOINT = "api/workflows";
 export const EXPERIMENTS_API_ENDPOINT = "api/experiments"
 export const FILES_ENDPOINT = "files"
+export const WORKFLOWS_EXECUTION_ENDPOINT = "exec"

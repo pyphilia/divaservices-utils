@@ -10,13 +10,6 @@ import {
 } from "../config";
 import Decorators from "./decorators";
 
-// const getResults = async url => {
-//   let result;
-//   const xmlApi = await fetch(url);
-//   result = await xmlApi.json();
-//   return result;
-// };
-
 const getServices = async () => {
   let xml;
   const xmlApi = await fetch(`${BASE_URL}/${SERVICES_API_ENDPOINT}`);
@@ -46,6 +39,11 @@ const getWorkflowById = async id => {
   return xml;
 };
 
+const getCollections = async () => {
+  const xml = await fetch(COLLECTIONS_API);
+  return await Decorators.collectionsDecorator(await xml.text());
+};
+
 const getServiceById = async id => {
   let xml;
   const service = await fetch(`${BASE_URL}/${SERVICES_API_ENDPOINT}?id=${id}`, {
@@ -57,7 +55,7 @@ const getServiceById = async id => {
   return xml;
 };
 
-const uploadCollectionAPI = async request => {
+const uploadCollection = async request => {
   const result = await fetch(`${BASE_URL}/${COLLECTIONS_API_ENDPOINT}`, {
     headers: {
       "Content-Type": "text/xml"
@@ -66,6 +64,31 @@ const uploadCollectionAPI = async request => {
     body: request
   });
   return result;
+};
+
+export const sendExecutionRequestToWorkflow = async (request, id) => {
+  const data = await fetch(
+    `${BASE_URL}/workflows/${id}/${WORKFLOWS_EXECUTION_ENDPOINT}`,
+    {
+      headers: {
+        "Content-Type": "text/xml"
+      },
+      method: "POST",
+      body: request
+    }
+  );
+  return await data.text();
+};
+
+export const sendExecutionRequestToService = async (request, id) => {
+  const data = await fetch(`${BASE_URL}/services/${id}/execution`, {
+    headers: {
+      "Content-Type": "text/xml"
+    },
+    method: "POST",
+    body: request
+  });
+  return await data.text();
 };
 
 const buildFileUrlFromCollectionAndName = (collection, name) => {
@@ -77,12 +100,20 @@ const buildFileUrlFromIdentifier = identifier => {
   return buildFileUrlFromCollectionAndName(collection, name);
 };
 
+const getExperimentViewUrl = id => {
+  return `${BASE_URL}/experiments/${id}/explore`;
+};
+
 export default {
-  uploadCollectionAPI,
+  getCollections,
   getExperimentById,
   getServiceById,
   getServices,
   getWorkflowById,
   buildFileUrlFromCollectionAndName,
-  buildFileUrlFromIdentifier
+  buildFileUrlFromIdentifier,
+  uploadCollection,
+  sendExecutionRequestToService,
+  sendExecutionRequestToWorkflow,
+  getExperimentViewUrl
 };
