@@ -1,12 +1,3 @@
-const buildFileUrlFromCollectionAndName = (baseUrl, collection, name) => {
-  return `${baseUrl}/${collection}/original/${name}`;
-};
-
-const buildFileUrlFromIdentifier = (baseUrl, identifier) => {
-  const [collection, name] = identifier.split("/");
-  return buildFileUrlFromCollectionAndName(baseUrl, collection, name);
-};
-
 const buildNameForRequest = str => {
   return str.replace(/\s/g, "");
 };
@@ -40,8 +31,6 @@ export const parseParameterValue = value => {
 };
 
 export default {
-  buildFileUrlFromCollectionAndName,
-  buildFileUrlFromIdentifier,
   getUrlParameters,
   buildNameForRequest,
   buildInputNameForService,

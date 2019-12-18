@@ -4,16 +4,18 @@ import {
   SERVICES_API_ENDPOINT,
   EXPERIMENTS_API_ENDPOINT,
   WORKFLOWS_API_ENDPOINT,
-  COLLECTIONS_API_ENDPOINT
+  COLLECTIONS_API_ENDPOINT,
+  DIVASERVICES_BASE_URL,
+  FILES_ENDPOINT
 } from "../config";
 import Decorators from "./decorators";
 
-const getResults = async url => {
-  let result;
-  const xmlApi = await fetch(url);
-  result = await xmlApi.json();
-  return result;
-};
+// const getResults = async url => {
+//   let result;
+//   const xmlApi = await fetch(url);
+//   result = await xmlApi.json();
+//   return result;
+// };
 
 const getServices = async () => {
   let xml;
@@ -66,11 +68,21 @@ const uploadCollectionAPI = async request => {
   return result;
 };
 
+const buildFileUrlFromCollectionAndName = (collection, name) => {
+  return `${DIVASERVICES_BASE_URL}/${FILES_ENDPOINT}/${collection}/original/${name}`;
+};
+
+const buildFileUrlFromIdentifier = identifier => {
+  const [collection, name] = identifier.split("/");
+  return buildFileUrlFromCollectionAndName(collection, name);
+};
+
 export default {
   uploadCollectionAPI,
   getExperimentById,
-  getResults,
   getServiceById,
   getServices,
-  getWorkflowById
+  getWorkflowById,
+  buildFileUrlFromCollectionAndName,
+  buildFileUrlFromIdentifier
 };

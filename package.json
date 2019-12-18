@@ -19,6 +19,7 @@
   "homepage": "https://github.com/pyphilia/divaservices-utils#readme",
   "dependencies": {
     "eslint": "^6.6.0",
+    "node-fetch": "^2.6.0",
     "prettier": "^1.19.1",
     "xml2js": "^0.4.22"
   },
