@@ -13,10 +13,20 @@ const buildNameForRequest = str => {
  * Build input name for service
  * used to build workflow execution request (parameter key)
  */
-const buildInputNameForService = (serviceName, inputName) => {
+const buildInputNameForWorkflow = (serviceName, inputName) => {
   return `${buildNameForRequest(serviceName)}_${buildNameForRequest(
     inputName
   )}`;
+};
+
+/**
+ * Build input name for service
+ * used to build workflow execution request (parameter key)
+ */
+const buildInputNameForRequest = (isService, serviceName, inputName) => {
+  return isService
+    ? inputName
+    : buildInputNameForWorkflow(serviceName, inputName);
 };
 
 /**
@@ -88,10 +98,11 @@ const buildFileUrlFromIdentifier = identifier => {
 export default {
   getUrlParameters,
   buildNameForRequest,
-  buildInputNameForService,
+  buildInputNameForWorkflow,
   buildInputReferenceName,
   parseParameterValue,
   trimString,
   buildFileUrlFromCollectionAndName,
-  buildFileUrlFromIdentifier
+  buildFileUrlFromIdentifier,
+  buildInputNameForRequest
 };

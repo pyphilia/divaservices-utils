@@ -12,6 +12,8 @@ import {
   WORKFLOWS_EXECUTION_ENDPOINT
 } from "../config";
 import Decorators from "./decorators";
+import Constants from "./constants";
+const { ExecutionTypes } = Constants;
 
 const getServices = async () => {
   let xml;
@@ -110,6 +112,20 @@ export const sendExecutionRequestToService = async (request, id) => {
   return await data.text();
 };
 
+export const sendExecutionRequest = async (type, request, id) => {
+  switch (type) {
+    case ExecutionTypes.SERVICE: {
+      return await sendExecutionRequestToService(request, id);
+    }
+    case ExecutionTypes.WORKFLOW: {
+      return await sendExecutionRequestToWorkflow(request, id);
+    }
+    default: {
+      throw "Unknown execution type " + type;
+    }
+  }
+};
+
 const getExperimentViewUrl = id => {
   return `${BASE_URL}/experiments/${id}/explore`;
 };
@@ -150,5 +166,6 @@ export default {
   uploadCollection,
   sendExecutionRequestToService,
   sendExecutionRequestToWorkflow,
-  getExperimentViewUrl
+  getExperimentViewUrl,
+  sendExecutionRequest
 };
