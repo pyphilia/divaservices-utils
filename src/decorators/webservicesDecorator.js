@@ -4,14 +4,19 @@
  */
 
 import { createXml2jsPromise } from "./utils";
+import Constants from "../constants.js";
+const { Types } = Constants;
 
-const getTypeName = data => {
+/**
+ * builds input data
+ */
+const buildDataInformation = data => {
   if (data.MimeTypes) {
     const {
       MimeTypes: [mimeTypes]
     } = data;
     return {
-      type: "file",
+      type: Types.FILE.type,
       allowed: mimeTypes.Allowed,
       defaultValue: mimeTypes.Default[0]
     };
@@ -23,12 +28,12 @@ const getTypeName = data => {
     return {
       defaultValue,
       values: Value,
-      type: "select"
+      type: Types.SELECT.type
     };
   } else if (data.Type[0].StepNumberType) {
     const { Default, Min, Max, Step } = data.Type[0].StepNumberType[0];
     const res = {
-      type: "number",
+      type: Types.NUMBER.type,
       values: {}
     };
     if (Min) {
@@ -79,7 +84,7 @@ export const _serviceDecorator = xml => {
         Description: [description],
         Name: [name]
       } = paramData;
-      const { type, allowed, defaultValue } = getTypeName(paramData);
+      const { type, allowed, defaultValue } = buildDataInformation(paramData);
       const param = {
         description,
         name,
@@ -96,7 +101,7 @@ export const _serviceDecorator = xml => {
         Description: [description],
         Name: [name]
       } = parameter;
-      const { type, defaultValue, values } = getTypeName(parameter);
+      const { type, defaultValue, values } = buildDataInformation(parameter);
       const param = {
         description,
         name,
@@ -121,7 +126,7 @@ export const _serviceDecorator = xml => {
         description = Description[0];
       }
 
-      const { type, allowed } = getTypeName(output);
+      const { type, allowed } = buildDataInformation(output);
       const out = {
         description,
         name,

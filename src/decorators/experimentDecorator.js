@@ -1,9 +1,9 @@
-import { createXml2jsPromise } from "./utils";
-
 /**
  * This file contains a decorator to traslate the
  * given webservices xml file to an equivalent JSON file
  */
+
+import { createXml2jsPromise } from "./utils";
 
 const experimentDecorator = async xml => {
   const data = (await createXml2jsPromise(xml)).Response;
@@ -18,6 +18,8 @@ const experimentDecorator = async xml => {
     for (const step of Steps[0].Step) {
       additionalInfos.steps[step.No[0]] = step.Name[0];
     }
+  } else {
+    throw "This Experiment is not from Service nor Workflow";
   }
 
   const {
@@ -41,6 +43,8 @@ const experimentDecorator = async xml => {
   } else if (Service) {
     type = { service: parseInt(Service[0].Key[0]) };
     stepsData = Service;
+  } else {
+    throw "This Experiment is not from Service nor Workflow";
   }
 
   const steps = [];

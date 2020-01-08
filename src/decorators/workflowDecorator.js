@@ -33,7 +33,7 @@ const workflowDecorator = async (xmlFile, webservices) => {
       name: serviceName,
       outputs: serviceOutputs,
       expectedRuntime,
-      type,
+      category,
       description: serviceDescription
     } = currentWebservice;
 
@@ -44,7 +44,8 @@ const workflowDecorator = async (xmlFile, webservices) => {
       outputs: serviceOutputs,
       description: serviceDescription,
       expectedRuntime,
-      type
+      category,
+      serviceId: parseInt(stepKey)
     };
 
     const { Parameter, Data } = inputs;

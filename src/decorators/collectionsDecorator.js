@@ -1,5 +1,5 @@
 /**
- * This file contains a decorator to traslate the
+ * This file contains a decorator to translate the
  * given collections xml file to an equivalent JSON file
  */
 
@@ -14,7 +14,7 @@ const _collectionDecorator = collection => {
   } = collection;
 
   if (error) {
-    coll = {
+    throw {
       error: error[0],
       name,
       url
@@ -23,6 +23,7 @@ const _collectionDecorator = collection => {
     const files = [];
     const { Files, StatusMessage } = collection;
 
+    // files
     if (Files && Files[0].File) {
       for (const file of Files[0].File) {
         const {
@@ -32,6 +33,7 @@ const _collectionDecorator = collection => {
         } = file;
 
         const f = { url, identifier };
+        // options
         if (Options) {
           const options = {};
           for (const [k, v] of Object.entries(Options[0])) {
