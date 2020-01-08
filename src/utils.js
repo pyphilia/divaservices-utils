@@ -1,5 +1,5 @@
 import { DIVASERVICES_BASE_URL, FILES_ENDPOINT } from "../config";
-import Constants from "./constants.js";
+import Constants from "./constants";
 
 /**
  * Build name for request
