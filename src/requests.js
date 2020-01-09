@@ -10,7 +10,8 @@ import {
   WORKFLOWS_API_ENDPOINT,
   COLLECTIONS_API_ENDPOINT,
   WORKFLOWS_EXECUTION_ENDPOINT,
-  SERVICES_EXECUTION_ENDPOINT
+  SERVICES_EXECUTION_ENDPOINT,
+  WORKFLOWS_EXECUTION_VIEW
 } from "../config";
 import Decorators from "./decorators";
 import Constants from "./constants";
@@ -136,7 +137,7 @@ const getServiceViewUrl = id => {
 };
 
 const getWorkflowExecutionViewUrl = id => {
-  return `${BASE_URL}/${id}/${WORKFLOWS_EXECUTION_ENDPOINT}`;
+  return `${BASE_URL}/workflows/${id}/${WORKFLOWS_EXECUTION_VIEW}`;
 };
 
 const saveWorkflow = async (xml, id, installation = false) => {
