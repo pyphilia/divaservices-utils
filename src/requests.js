@@ -91,7 +91,7 @@ const uploadCollection = async request => {
 
 export const sendExecutionRequestToWorkflow = async (request, id) => {
   const data = await fetch(
-    `${BASE_URL}/${id}/${WORKFLOWS_EXECUTION_ENDPOINT}`,
+    `${BASE_URL}/${WORKFLOWS_EXECUTION_ENDPOINT}?id=${id}`,
     {
       headers: {
         "Content-Type": "text/xml"
@@ -104,13 +104,16 @@ export const sendExecutionRequestToWorkflow = async (request, id) => {
 };
 
 export const sendExecutionRequestToService = async (request, id) => {
-  const data = await fetch(`${BASE_URL}/${id}/${SERVICES_EXECUTION_ENDPOINT}`, {
-    headers: {
-      "Content-Type": "text/xml"
-    },
-    method: "POST",
-    body: request
-  });
+  const data = await fetch(
+    `${BASE_URL}/${SERVICES_EXECUTION_ENDPOINT}?id=${id}`,
+    {
+      headers: {
+        "Content-Type": "text/xml"
+      },
+      method: "POST",
+      body: request
+    }
+  );
   return await data.text();
 };
 
