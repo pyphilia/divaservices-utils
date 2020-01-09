@@ -9,7 +9,8 @@ import {
   EXPERIMENTS_API_ENDPOINT,
   WORKFLOWS_API_ENDPOINT,
   COLLECTIONS_API_ENDPOINT,
-  WORKFLOWS_EXECUTION_ENDPOINT
+  WORKFLOWS_EXECUTION_ENDPOINT,
+  SERVICES_EXECUTION_ENDPOINT
 } from "../config";
 import Decorators from "./decorators";
 import Constants from "./constants";
@@ -89,7 +90,7 @@ const uploadCollection = async request => {
 
 export const sendExecutionRequestToWorkflow = async (request, id) => {
   const data = await fetch(
-    `${BASE_URL}/workflows/${id}/${WORKFLOWS_EXECUTION_ENDPOINT}`,
+    `${BASE_URL}/${id}/${WORKFLOWS_EXECUTION_ENDPOINT}`,
     {
       headers: {
         "Content-Type": "text/xml"
@@ -102,7 +103,7 @@ export const sendExecutionRequestToWorkflow = async (request, id) => {
 };
 
 export const sendExecutionRequestToService = async (request, id) => {
-  const data = await fetch(`${BASE_URL}/services/${id}/execution`, {
+  const data = await fetch(`${BASE_URL}/${id}/${SERVICES_EXECUTION_ENDPOINT}`, {
     headers: {
       "Content-Type": "text/xml"
     },
@@ -134,8 +135,8 @@ const getServiceViewUrl = id => {
   return `${BASE_URL}/services/${id}/view`;
 };
 
-const getExecutionViewUrl = id => {
-  return `${BASE_URL}/workflows/${id}/${WORKFLOWS_EXECUTION_ENDPOINT}`;
+const getWorkflowExecutionViewUrl = id => {
+  return `${BASE_URL}/${id}/${WORKFLOWS_EXECUTION_ENDPOINT}`;
 };
 
 const saveWorkflow = async (xml, id, installation = false) => {
@@ -156,7 +157,7 @@ const saveWorkflow = async (xml, id, installation = false) => {
 export default {
   getWorkflowByIdJSON,
   getServiceViewUrl,
-  getExecutionViewUrl,
+  getWorkflowExecutionViewUrl,
   saveWorkflow,
   getCollections,
   getExperimentById,
