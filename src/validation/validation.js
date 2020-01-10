@@ -73,6 +73,10 @@ const checkValue = (value, type, values) => {
     case Types.SELECT.type:
       isValid = checkSelectValue(value, values);
       break;
+    case Types.TEXT.type:
+      // no validation for text types
+      isValid = true;
+      break;
     default:
       throw `Type ${type} unknown`;
   }

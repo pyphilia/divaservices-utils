@@ -75,7 +75,7 @@ export const _serviceDecorator = xml => {
     EndPoint: [endpoint],
     BaseURL: [baseurl]
   } = api;
-  const { Data, Parameter } = inputsData;
+  const { Data, Parameter, Text, Highlighter } = inputsData;
 
   const inputs = [];
   if (Data) {
@@ -111,6 +111,29 @@ export const _serviceDecorator = xml => {
       };
       inputs.push(param);
     }
+  }
+
+  if (Text) {
+    for (const text of Text) {
+      const {
+        Description: [description],
+        Name: [name],
+        Default
+      } = text;
+      const param = {
+        description,
+        name,
+        type: Types.TEXT.type
+      };
+      if (Default) {
+        param.defaultValue = Default[0];
+      }
+      inputs.push(param);
+    }
+  }
+
+  if (Highlighter) {
+    // @TODO
   }
 
   const outputs = [];

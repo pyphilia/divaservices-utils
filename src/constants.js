@@ -3,6 +3,7 @@
 const Types = {
   SELECT: { tag: "select", type: "select" },
   NUMBER: { tag: "input", type: "number" },
+  TEXT: { tag: "input", type: "text" },
   FILE: { type: "file" },
   FOLDER: { type: "folder" }
 };

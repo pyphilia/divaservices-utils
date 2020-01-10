@@ -191,7 +191,7 @@ def create_services_xml(api_url_base, filepath="services.xml"):
                 for mimetypes in inp['file']['options']['mimeTypes']['allowed']:
                   ET.SubElement(dataType, 'Allowed').text = mimetypes
 
-              if 'folder' in inp:
+              elif 'folder' in inp:
                 el = ET.SubElement(inputs, 'Data')
                 if(not inp['folder']['options']['required']):
                   el.attrib['Status'] = 'Optional'
@@ -206,7 +206,7 @@ def create_services_xml(api_url_base, filepath="services.xml"):
                 # for mimetypes in inp['folder']['options']['mimeTypes']['allowed']:
                 #   ET.SubElement(mime, 'Allowed').text = mimetypes
 
-              elif 'outputfolder' in inp:
+              elif 'outputFolder' in inp:
                 continue
 
               elif 'number' in inp:
@@ -245,6 +245,26 @@ def create_services_xml(api_url_base, filepath="services.xml"):
                 for value in options['values']:
                   ET.SubElement(enumType, 'Value').text = str(value)
                 ET.SubElement(enumType, 'Default').text = str(options['default'])
+
+              elif 'highlighter' in inp:
+                el = ET.SubElement(inputs, 'Highlighter')
+                ET.SubElement(el, 'Type').text = inp['highlighter']['type']
+                if 'name' in inp['highlighter']:
+                  ET.SubElement(el, 'Name').text = inp['highlighter']['name']
+              
+              elif 'text' in inp:
+                el = ET.SubElement(inputs, 'Text')
+                if(not inp['text']['options']['required']):
+                  el.attrib['Status'] = 'Optional'
+
+                ET.SubElement(el, 'Name').text = inp['text']['name']
+                ET.SubElement(el, 'Description').text = inp['text']['description']
+                options = inp['text']['options']
+                if 'default' in options :
+                  ET.SubElement(el, 'Default').text = options['default']
+
+              else:
+                print(inp)
             
             outputs = ET.SubElement(api, 'Outputs')
 
@@ -273,4 +293,4 @@ def create_services_xml(api_url_base, filepath="services.xml"):
     else:
         return None
 
-create_services_xml('http://134.21.72.190:8080/', '../public/services.xml')
+create_services_xml('http://134.21.72.190:8080/', '../../public/services.xml')
