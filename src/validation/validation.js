@@ -64,7 +64,7 @@ const checkSelectValue = (value, values) => {
  * generic validation check, redirects to correct
  * validation function depending on the type
  */
-const checkValue = (value, type, values) => {
+const checkValue = (value, type, values, allowEmptyValue = true) => {
   let isValid;
   switch (type) {
     case Types.NUMBER.type:
@@ -74,13 +74,16 @@ const checkValue = (value, type, values) => {
       isValid = checkSelectValue(value, values);
       break;
     case Types.TEXT.type:
+    case Types.FOLDER.type:
       // no validation for text types
       isValid = true;
       break;
     default:
       throw `Type ${type} unknown`;
   }
-  return isValid;
+  const emptyCondition =
+    allowEmptyValue || (value !== undefined && value.length !== 0);
+  return isValid && emptyCondition;
 };
 
 export default { checkNumberValue, checkSelectValue, checkValue };

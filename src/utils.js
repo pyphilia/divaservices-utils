@@ -5,7 +5,14 @@ import Constants from "./constants";
  * Build name for request
  * Used for service and workflow name
  */
-const buildNameForRequest = str => {
+const buildServiceNameForRequest = (name, id) => {
+  return `${name.replace(/\s/g, "")}-${id}`;
+};
+
+/**
+ * Build input name for request
+ */
+const buildInputName = str => {
   return str.replace(/\s/g, "");
 };
 
@@ -14,9 +21,7 @@ const buildNameForRequest = str => {
  * used to build workflow execution request (parameter key)
  */
 const buildInputNameForWorkflow = (serviceName, inputName) => {
-  return `${buildNameForRequest(serviceName)}_${buildNameForRequest(
-    inputName
-  )}`;
+  return `${buildInputName(serviceName)}_${buildInputName(inputName)}`;
 };
 
 /**
@@ -96,13 +101,13 @@ const buildFileUrlFromIdentifier = identifier => {
 };
 
 export default {
+  buildServiceNameForRequest,
   getUrlParameters,
-  buildNameForRequest,
+  buildInputNameForRequest,
   buildInputNameForWorkflow,
   buildInputReferenceName,
   parseParameterValue,
   trimString,
   buildFileUrlFromCollectionAndName,
   buildFileUrlFromIdentifier,
-  buildInputNameForRequest
 };

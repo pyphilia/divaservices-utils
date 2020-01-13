@@ -15,8 +15,13 @@ const buildDataInformation = data => {
     const {
       MimeTypes: [mimeTypes]
     } = data;
+    // handle file and folder cases
+    const type =
+      mimeTypes.Default[0] === Types.FOLDER.type
+        ? Types.FOLDER.type
+        : Types.FILE.type;
     return {
-      type: Types.FILE.type,
+      type,
       allowed: mimeTypes.Allowed,
       defaultValue: mimeTypes.Default[0]
     };

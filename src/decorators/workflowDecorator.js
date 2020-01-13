@@ -18,7 +18,7 @@ const workflowDecorator = async (xmlFile, webservices) => {
   for (const step of steps.Step) {
     const {
       No: [stepNo],
-      // Name: [stepName],
+      Name: [stepName],
       Service: [key],
       Inputs: [inputs]
     } = step;
@@ -38,6 +38,7 @@ const workflowDecorator = async (xmlFile, webservices) => {
     } = currentWebservice;
 
     const service = {
+      stepName,
       no: stepNo,
       inputs: JSON.parse(JSON.stringify(serviceInputs)), // deep clone, otherwise it shares inputs with same named services
       name: serviceName,
