@@ -4,7 +4,7 @@
  */
 
 import DivaServices from "../utils";
-const { buildNameForRequest, trimString } = DivaServices;
+const { trimString } = DivaServices;
 
 /**
  * Build a parameter element given name and value
@@ -29,12 +29,30 @@ export const Data = (name, value) => {
 };
 
 /**
+ * Build a run element given steps
+ */
+export const Run = steps => {
+  const xml = `<Run>
+  ${Steps(steps)}
+  </Run>`;
+  return trimString(xml);
+};
+
+/**
  * Build a step element given number, name and inputs xml string
  */
 export const Step = (no, name, inputsXML) => {
   const xml = `<Step><No>${no}</No><Name>
-  ${buildNameForRequest(name)}
+  ${name}
   </Name><Inputs>${inputsXML}</Inputs></Step>`;
+  return trimString(xml);
+};
+
+/**
+ * Build a step element given number, name and inputs xml string
+ */
+export const Steps = steps => {
+  const xml = `<Steps>${steps}</Steps>`;
   return trimString(xml);
 };
 
@@ -42,9 +60,9 @@ export const Step = (no, name, inputsXML) => {
  * Build an execution request xml element
  * this request is send to start an execution
  */
-export const ExecutionRequest = (steps, jsonRequest) => {
+export const ExecutionRequest = (runs, jsonRequest) => {
   const xml = `<Request>
-  <Steps>${steps}</Steps>
+  <Runs>${runs}</Runs>
   <JsonRequest>${JSON.stringify(jsonRequest)}</JsonRequest>
   </Request>`;
   return trimString(xml);
@@ -61,4 +79,12 @@ export const SaveRequest = (steps, request) => {
   return trimString(xml);
 };
 
-export default { Parameter, Data, Step, ExecutionRequest, SaveRequest };
+export default {
+  Parameter,
+  Data,
+  Step,
+  ExecutionRequest,
+  SaveRequest,
+  Steps,
+  Run
+};

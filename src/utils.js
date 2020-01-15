@@ -93,11 +93,9 @@ const buildFileUrlFromCollectionAndName = (collection, name) => {
  * identifier is of form: collection/name
  */
 const buildFileUrlFromIdentifier = identifier => {
-  if (identifier.indexOf("/") >= 0) {
-    throw `${identifier} shouldn't contain character '/'`;
-  }
-  const [collection, name] = identifier.split("/");
-  return buildFileUrlFromCollectionAndName(collection, name);
+  const results = identifier.split("/");
+  const [collection, ...name] = results;
+  return buildFileUrlFromCollectionAndName(collection, name.join(""));
 };
 
 export default {
@@ -109,5 +107,5 @@ export default {
   parseParameterValue,
   trimString,
   buildFileUrlFromCollectionAndName,
-  buildFileUrlFromIdentifier,
+  buildFileUrlFromIdentifier
 };
