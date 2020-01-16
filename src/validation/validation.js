@@ -4,7 +4,8 @@
 
 import Constants from "../constants.js";
 const { Types } = Constants;
-
+import DivaServices from "../utils";
+const { checkType } = DivaServices;
 /**
  * check whether currentVal verifies the given step
  * or less precise
@@ -41,14 +42,20 @@ const checkStep = (step, currentVal) => {
  * checkStep(number)
  */
 const checkNumberValue = (value, values) => {
+  if (typeof value !== "number") {
+    throw "Value is not a number";
+  }
+
   let isValid = true;
-  let { min, max, step } = values;
-  min = parseFloat(min);
-  max = parseFloat(max);
-  const minCondition = !isNaN(min) ? value >= min : true;
-  const maxCondition = !isNaN(max) ? value <= max : true;
-  const stepCondition = checkStep(step, value);
-  isValid = minCondition && maxCondition && stepCondition;
+  if (values) {
+    let { min, max, step } = values;
+    min = parseFloat(min);
+    max = parseFloat(max);
+    const minCondition = !isNaN(min) ? value >= min : true;
+    const maxCondition = !isNaN(max) ? value <= max : true;
+    const stepCondition = checkStep(step, value);
+    isValid = minCondition && maxCondition && stepCondition;
+  }
 
   return isValid;
 };
@@ -57,6 +64,12 @@ const checkNumberValue = (value, values) => {
  * suppose that value and values inputs are strings
  */
 const checkSelectValue = (value, values) => {
+  if (value == undefined) {
+    throw "value is not valid: " + value;
+  }
+  if (!values || values.filter(el => el).length == 0) {
+    throw "values is not valid: " + values;
+  }
   return values.indexOf(value) >= 0;
 };
 
@@ -65,6 +78,12 @@ const checkSelectValue = (value, values) => {
  * validation function depending on the type
  */
 const checkValue = (value, type, values, allowEmptyValue = true) => {
+  if (value == undefined) {
+    throw "value is not valid: " + value;
+  }
+
+  checkType(type);
+
   let isValid;
   switch (type) {
     case Types.NUMBER.type:
@@ -76,7 +95,7 @@ const checkValue = (value, type, values, allowEmptyValue = true) => {
     case Types.TEXT.type:
     case Types.FOLDER.type:
       // no validation for text types
-      isValid = true;
+      isValid = typeof value === "string";
       break;
     default:
       throw `Type ${type} unknown`;

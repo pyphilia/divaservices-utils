@@ -4,16 +4,24 @@
  */
 
 import DivaServices from "../utils";
-const { trimString } = DivaServices;
+const {
+  trimString,
+  checkXMLString,
+  checkStringNonEmpty,
+  checkString
+} = DivaServices;
 
 /**
  * Build a parameter element given name and value
  */
 export const Parameter = (name, value) => {
+  checkString(name);
+  checkStringNonEmpty(name);
   const xml = `<Parameter>
   <Name>${name}</Name>
   <Value>${value}</Value>
   </Parameter>`;
+  checkXMLString(xml);
   return trimString(xml);
 };
 
@@ -21,10 +29,13 @@ export const Parameter = (name, value) => {
  * Build a data element given name and value
  */
 export const Data = (name, value) => {
+  checkString(name);
+  checkStringNonEmpty(name);
   const xml = `<Data>
   <Name>${name}</Name>
   <Value>${value}</Value>
   </Data>`;
+  checkXMLString(xml);
   return trimString(xml);
 };
 
@@ -35,6 +46,7 @@ export const Run = steps => {
   const xml = `<Run>
   ${Steps(steps)}
   </Run>`;
+  checkXMLString(xml);
   return trimString(xml);
 };
 
@@ -42,9 +54,21 @@ export const Run = steps => {
  * Build a step element given number, name and inputs xml string
  */
 export const Step = (no, name, inputsXML) => {
-  const xml = `<Step><No>${no}</No><Name>
+  if (no == undefined) {
+    throw `no {no} is not valid`;
+  }
+  const noInt = parseInt(no);
+  if (isNaN(noInt)) {
+    throw `no ${no} is not an integer`;
+  }
+
+  checkString(name);
+  checkStringNonEmpty(name);
+
+  const xml = `<Step><No>${noInt}</No><Name>
   ${name}
   </Name><Inputs>${inputsXML}</Inputs></Step>`;
+  checkXMLString(xml);
   return trimString(xml);
 };
 
@@ -53,6 +77,7 @@ export const Step = (no, name, inputsXML) => {
  */
 export const Steps = steps => {
   const xml = `<Steps>${steps}</Steps>`;
+  checkXMLString(xml);
   return trimString(xml);
 };
 
@@ -61,10 +86,16 @@ export const Steps = steps => {
  * this request is send to start an execution
  */
 export const ExecutionRequest = (runs, jsonRequest) => {
+  checkString(runs);
+  checkStringNonEmpty(runs);
+  if (typeof jsonRequest !== "object") {
+    throw `jsonRequest is not a JSON object`;
+  }
   const xml = `<Request>
   <Runs>${runs}</Runs>
   <JsonRequest>${JSON.stringify(jsonRequest)}</JsonRequest>
   </Request>`;
+  checkXMLString(xml);
   return trimString(xml);
 };
 
@@ -76,6 +107,7 @@ export const SaveRequest = (steps, request) => {
   <JsonRequest>${request}</JsonRequest>
   ${steps}
   </Request>`;
+  checkXMLString(xml);
   return trimString(xml);
 };
 

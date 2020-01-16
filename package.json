@@ -4,7 +4,7 @@
   "description": "utils for divaservices interfaces: decorators, validation, etc",
   "main": "index.mjs",
   "scripts": {
-    "test": "jest test",
+    "test": "jest test --coverage",
     "prettier:write": "prettier --write  \"src/**/*.js\" \"test/*.js\"",
     "eslint": "eslint src/*.js src/**/*.js"
   },
