@@ -42,8 +42,9 @@ const checkStep = (step, currentVal) => {
  * checkStep(number)
  */
 const checkNumberValue = (value, values) => {
+  let valueInt = value;
   if (typeof value !== "number") {
-    throw "Value is not a number";
+    valueInt = parseFloat(value);
   }
 
   let isValid = true;
@@ -51,9 +52,9 @@ const checkNumberValue = (value, values) => {
     let { min, max, step } = values;
     min = parseFloat(min);
     max = parseFloat(max);
-    const minCondition = !isNaN(min) ? value >= min : true;
-    const maxCondition = !isNaN(max) ? value <= max : true;
-    const stepCondition = checkStep(step, value);
+    const minCondition = !isNaN(min) ? valueInt >= min : true;
+    const maxCondition = !isNaN(max) ? valueInt <= max : true;
+    const stepCondition = checkStep(step, valueInt);
     isValid = minCondition && maxCondition && stepCondition;
   }
 
