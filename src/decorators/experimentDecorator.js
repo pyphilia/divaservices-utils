@@ -42,7 +42,9 @@ const experimentDecorator = async xml => {
     runsData = Workflow[0].Runs[0].Run;
   } else if (Service) {
     type = { service: parseInt(Service[0].Key[0]) };
-    runsData = [{ Steps: [{ Step: Service[0].Runs[0].Run }] }];
+    runsData = Service[0].Runs[0].Run.map(run => ({
+      Steps: [{ Step: [run] }]
+    }));
   } else {
     throw "This Experiment is not from Service nor Workflow";
   }

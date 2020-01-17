@@ -16,10 +16,10 @@ describe("checkNumberValue", () => {
       checkNumberValue(undefined, { min: 1 });
     }).toThrow();
     expect(() => {
-      checkNumberValue(null, { min: 1 });
+      checkNumberValue("1eifudjk", { min: 1 });
     }).toThrow();
     expect(() => {
-      checkNumberValue("1", { min: 1 });
+      checkNumberValue(null, { min: 1 });
     }).toThrow();
     expect(() => {
       checkNumberValue(null, null);
@@ -43,6 +43,10 @@ describe("checkNumberValue", () => {
     expect(checkNumberValue(1.1, { max: 2, step: 0.1 })).toBeTruthy();
     expect(checkNumberValue(1.1, { min: 0, max: 2, step: 0.1 })).toBeTruthy();
     expect(checkNumberValue(1.1, { min: 0, max: 2, step: 0.01 })).toBeTruthy();
+
+    expect(() => {
+      checkNumberValue("1", { min: 1 });
+    }).toBeTruthy();
   });
 
   it("checkNumberValue with invalid inputs", () => {

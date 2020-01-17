@@ -145,7 +145,7 @@ const parseParameterValue = (value, type = Constants.Types.NUMBER.type) => {
   } else {
     // return a number
     const ret = parseFloat(value);
-    if (isNaN(ret)) {
+    if (isNaN(ret) || ret != value) {
       throw `value ${value} is not a number`;
     } else {
       return ret;
