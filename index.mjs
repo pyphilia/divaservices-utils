@@ -1,8 +1,8 @@
-import Decorators from "./src/decorators/index.js";
-import Validation from "./src/validation/validation.js";
-import Constants from "./src/constants.js";
-import DivaServices from "./src/utils"
-import API from "./src/requests"
-import XMLBuilders from "./src/builders/xmlBuilders.js"
+import Decorators from "./lib/decorators/index.js";
+import Validation from "./lib/validation/validation.js";
+import Constants from "./lib/constants.js";
+import DivaServices from "./lib/utils"
+import API from "./lib/requests"
+import XMLBuilders from "./lib/builders/xmlBuilders.js"
 
 export {Decorators, Validation, Constants, DivaServices, XMLBuilders, API};

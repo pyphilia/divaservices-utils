@@ -1,12 +1,16 @@
 {
   "name": "divaservices-utils",
   "version": "1.0.0",
-  "description": "utils for divaservices interfaces: decorators, validation, etc",
+  "description": "utility package for divaservices interfaces: decorators, validation, etc",
   "main": "index.mjs",
   "scripts": {
     "test": "jest test --coverage",
+    "prettier:check": "prettier --check \"src/**/*.js\" \"test/*.js\"",
     "prettier:write": "prettier --write  \"src/**/*.js\" \"test/*.js\"",
-    "eslint": "eslint src/*.js src/**/*.js"
+    "eslint": "eslint src/*.js src/**/*.js",
+    "pre-commit": "yarn prettier:check && yarn eslint && yarn test",
+    "pre-push": "yarn prettier:check && yarn eslint && yarn test",
+    "build": "babel src -d lib"
   },
   "repository": {
     "type": "git",
@@ -19,17 +23,25 @@
   },
   "homepage": "https://github.com/pyphilia/divaservices-utils#readme",
   "dependencies": {
-    "eslint": "^6.6.0",
     "node-fetch": "^2.6.0",
-    "prettier": "^1.19.1",
     "xml2js": "^0.4.22"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.3",
     "@babel/preset-env": "^7.7.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
+    "eslint": "^6.6.0",
+    "husky": "^4.0.10",
     "jest": "^24.9.0",
+    "prettier": "^1.19.1",
     "regenerator-runtime": "^0.13.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn pre-commit",
+      "pre-push": "yarn pre-push"
+    }
   }
 }
