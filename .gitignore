@@ -1,8 +1,7 @@
-/lib/
 /node_modules/
 
 public
 
-coverage/*
+/coverage/
 
 yarn-error.log
