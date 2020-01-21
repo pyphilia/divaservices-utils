@@ -1,5 +1,4 @@
-import XMLBuilders from "../src/builders/xmlBuilders";
-const {
+import {
   Parameter,
   Data,
   Run,
@@ -7,7 +6,7 @@ const {
   Steps,
   ExecutionRequest,
   SaveRequest
-} = XMLBuilders;
+} from "../src/builders/xmlBuilders";
 
 describe("Parameter", () => {
   it("Parameter tests", () => {

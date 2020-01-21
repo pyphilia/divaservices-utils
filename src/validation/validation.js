@@ -2,10 +2,8 @@
  * This file contains validation function
  */
 
-import Constants from "../constants.js";
-const { Types } = Constants;
-import DivaServices from "../utils";
-const { checkType } = DivaServices;
+import { Types } from "../constants.js";
+import { checkType } from "../utils";
 /**
  * check whether currentVal verifies the given step
  * or less precise
@@ -109,4 +107,4 @@ const checkValue = (value, type, values, allowEmptyValue = true) => {
   return isValid && emptyCondition;
 };
 
-export default { checkNumberValue, checkSelectValue, checkValue };
+export { checkNumberValue, checkSelectValue, checkValue };

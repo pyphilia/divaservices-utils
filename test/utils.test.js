@@ -1,5 +1,4 @@
-import DivaServices from "../src/utils";
-const {
+import {
   buildServiceNameForRequest,
   buildInputNameForWorkflow,
   buildInputNameForRequest,
@@ -7,9 +6,8 @@ const {
   buildInputReferenceName,
   parseParameterValue,
   buildFileUrlFromIdentifier
-} = DivaServices;
-import Constants from "../src/constants";
-const { Types } = Constants;
+} from "../src/utils";
+import { Types } from "../src/constants";
 
 describe("buildServiceNameForRequest", () => {
   it("buildServiceNameForRequest corner cases", () => {

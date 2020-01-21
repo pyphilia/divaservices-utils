@@ -6,7 +6,7 @@ import { webservicesDecorator, serviceDecorator } from "./webservicesDecorator";
 import workflowDecorator from "./workflowDecorator";
 import experimentDecorator from "./experimentDecorator";
 
-export default {
+export {
   collectionDecorator,
   collectionsDecorator,
   serviceDecorator,

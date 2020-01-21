@@ -3,18 +3,17 @@
  * These functions returns XML content as string
  */
 
-import DivaServices from "../utils";
-const {
+import {
   trimString,
   checkXMLString,
   checkStringNonEmpty,
   checkString
-} = DivaServices;
+} from "../utils";
 
 /**
  * Build a parameter element given name and value
  */
-export const Parameter = (name, value) => {
+const Parameter = (name, value) => {
   checkString(name);
   checkStringNonEmpty(name);
   const xml = `<Parameter>
@@ -28,7 +27,7 @@ export const Parameter = (name, value) => {
 /**
  * Build a data element given name and value
  */
-export const Data = (name, value) => {
+const Data = (name, value) => {
   checkString(name);
   checkStringNonEmpty(name);
   const xml = `<Data>
@@ -42,7 +41,7 @@ export const Data = (name, value) => {
 /**
  * Build a run element given steps
  */
-export const Run = steps => {
+const Run = steps => {
   const xml = `<Run>
   ${Steps(steps)}
   </Run>`;
@@ -53,7 +52,7 @@ export const Run = steps => {
 /**
  * Build a step element given number, name and inputs xml string
  */
-export const Step = (no, name, inputsXML) => {
+const Step = (no, name, inputsXML) => {
   if (no == undefined) {
     throw `no {no} is not valid`;
   }
@@ -75,7 +74,7 @@ export const Step = (no, name, inputsXML) => {
 /**
  * Build a step element given number, name and inputs xml string
  */
-export const Steps = steps => {
+const Steps = steps => {
   const xml = `<Steps>${steps}</Steps>`;
   checkXMLString(xml);
   return trimString(xml);
@@ -85,7 +84,7 @@ export const Steps = steps => {
  * Build an execution request xml element
  * this request is send to start an execution
  */
-export const ExecutionRequest = (runs, jsonRequest) => {
+const ExecutionRequest = (runs, jsonRequest) => {
   checkString(runs);
   checkStringNonEmpty(runs);
   if (typeof jsonRequest !== "object") {
@@ -102,7 +101,7 @@ export const ExecutionRequest = (runs, jsonRequest) => {
 /**
  * Build a save request
  */
-export const SaveRequest = (steps, request) => {
+const SaveRequest = (steps, request) => {
   const xml = `<Request>
   <JsonRequest>${request}</JsonRequest>
   ${steps}
@@ -111,12 +110,4 @@ export const SaveRequest = (steps, request) => {
   return trimString(xml);
 };
 
-export default {
-  Parameter,
-  Data,
-  Step,
-  ExecutionRequest,
-  SaveRequest,
-  Steps,
-  Run
-};
+export { Parameter, Data, Step, ExecutionRequest, SaveRequest, Steps, Run };

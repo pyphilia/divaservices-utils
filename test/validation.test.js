@@ -1,7 +1,9 @@
-import Validation from "../src/validation/validation";
-import Constants from "../src/constants";
-const { Types } = Constants;
-const { checkNumberValue, checkSelectValue, checkValue } = Validation;
+import {
+  checkNumberValue,
+  checkSelectValue,
+  checkValue
+} from "../src/validation/validation";
+import { Types } from "../src/constants";
 
 describe("checkNumberValue", () => {
   it("checkNumberValue corner cases", () => {

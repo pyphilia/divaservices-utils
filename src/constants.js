@@ -9,10 +9,10 @@ const Types = {
 };
 Object.freeze(Types);
 
-export const ExecutionTypes = {
+const ExecutionTypes = {
   SERVICE: "service",
   WORKFLOW: "workflow"
 };
 Object.freeze(ExecutionTypes);
 
-export default { Types, ExecutionTypes };
+export { Types, ExecutionTypes };

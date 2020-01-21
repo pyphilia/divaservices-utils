@@ -89,4 +89,4 @@ const workflowDecorator = async (xmlFile, webservices) => {
   return { id, information, services };
 };
 
-export default workflowDecorator;
+export { workflowDecorator };

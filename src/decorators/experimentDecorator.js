@@ -123,4 +123,4 @@ const experimentDecorator = async xml => {
   };
 };
 
-export default experimentDecorator;
+export { experimentDecorator };

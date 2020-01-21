@@ -1,5 +1,5 @@
 import { DIVASERVICES_BASE_URL, FILES_ENDPOINT } from "../config";
-import Constants from "./constants";
+import * as Constants from "./constants";
 
 /**
  * utilities functions to check variable validity
@@ -178,7 +178,7 @@ const buildFileUrlFromIdentifier = identifier => {
   return buildFileUrlFromCollectionAndName(collection, name.join("/"));
 };
 
-export default {
+export {
   checkType,
   checkString,
   checkXMLString,

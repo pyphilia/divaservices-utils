@@ -13,9 +13,8 @@ import {
   SERVICES_EXECUTION_ENDPOINT,
   WORKFLOWS_EXECUTION_VIEW
 } from "../config";
-import Decorators from "./decorators";
-import Constants from "./constants";
-const { ExecutionTypes } = Constants;
+import * as Decorators from "./decorators";
+import { ExecutionTypes } from "./constants";
 
 const getServices = async () => {
   let xml;
@@ -89,7 +88,7 @@ const uploadCollection = async request => {
   return result;
 };
 
-export const sendExecutionRequestToWorkflow = async (request, id) => {
+const sendExecutionRequestToWorkflow = async (request, id) => {
   const data = await fetch(
     `${BASE_URL}/${WORKFLOWS_EXECUTION_ENDPOINT}?id=${id}`,
     {
@@ -103,7 +102,7 @@ export const sendExecutionRequestToWorkflow = async (request, id) => {
   return await data.text();
 };
 
-export const sendExecutionRequestToService = async (request, id) => {
+const sendExecutionRequestToService = async (request, id) => {
   const data = await fetch(
     `${BASE_URL}/${SERVICES_EXECUTION_ENDPOINT}?id=${id}`,
     {
@@ -117,7 +116,7 @@ export const sendExecutionRequestToService = async (request, id) => {
   return await data.text();
 };
 
-export const sendExecutionRequest = async (type, request, id) => {
+const sendExecutionRequest = async (type, request, id) => {
   switch (type) {
     case ExecutionTypes.SERVICE: {
       return await sendExecutionRequestToService(request, id);
@@ -158,7 +157,7 @@ const saveWorkflow = async (xml, id, installation = false) => {
   );
 };
 
-export default {
+export {
   getWorkflowByIdJSON,
   getServiceViewUrl,
   getWorkflowExecutionViewUrl,
