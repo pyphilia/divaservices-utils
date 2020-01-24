@@ -4,8 +4,7 @@ import {
   Run,
   Step,
   Steps,
-  ExecutionRequest,
-  SaveRequest
+  ExecutionRequest
 } from "../src/builders/xmlBuilders";
 
 describe("Parameter", () => {

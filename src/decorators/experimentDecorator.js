@@ -5,7 +5,7 @@
 
 import { createXml2jsPromise } from "./utils";
 
-const experimentDecorator = async xml => {
+export const experimentDecorator = async xml => {
   const data = (await createXml2jsPromise(xml)).Response;
 
   const additionalInfos = {};
@@ -122,5 +122,3 @@ const experimentDecorator = async xml => {
     runs
   };
 };
-
-export { experimentDecorator };

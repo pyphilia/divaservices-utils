@@ -1,11 +1,13 @@
-export const BASE_URL = "http://diufvm17.unifr.ch:8080/exist/projects/diae";
-export const DIVASERVICES_BASE_URL = "http://134.21.72.190:8080";
-export const HOST = "/";
-export const COLLECTIONS_API_ENDPOINT = "api/collections";
-export const SERVICES_API_ENDPOINT = "api/services";
-export const WORKFLOWS_API_ENDPOINT = "api/workflows";
-export const EXPERIMENTS_API_ENDPOINT = "api/experiments";
-export const FILES_ENDPOINT = "files";
-export const WORKFLOWS_EXECUTION_ENDPOINT = "api/workflow-exec";
-export const SERVICES_EXECUTION_ENDPOINT = "api/service-exec";
-export const WORKFLOWS_EXECUTION_VIEW = "exec";
+module.exports = {
+  BASE_URL: "http://diufvm17.unifr.ch:8080/exist/projects/diae",
+  DIVASERVICES_BASE_URL : "http://134.21.72.190:8080",
+  HOST : "/",
+  COLLECTIONS_API_ENDPOINT : "api/collections",
+  SERVICES_API_ENDPOINT : "api/services",
+  WORKFLOWS_API_ENDPOINT : "api/workflows",
+  EXPERIMENTS_API_ENDPOINT : "api/experiments",
+  FILES_ENDPOINT : "files",
+  WORKFLOWS_EXECUTION_ENDPOINT : "api/workflow-exec",
+  SERVICES_EXECUTION_ENDPOINT : "api/service-exec",
+  WORKFLOWS_EXECUTION_VIEW : "exec"
+}

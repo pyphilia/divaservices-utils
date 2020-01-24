@@ -4,8 +4,7 @@
  */
 
 import { createXml2jsPromise } from "./utils";
-import Constants from "../constants.js";
-const { Types } = Constants;
+import { Types } from "../constants.js";
 
 /**
  * builds input data
